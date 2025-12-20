@@ -1,0 +1,58 @@
+{
+  "tags": [
+    {
+      "tags": "forge:bloody_tools, forge:bloody_armor, forge:bloody_blocks",
+      "label": "Sanghor, Lord of Blood",
+      "color": "4",
+      "advancement": "armageddon_mod:the_blood_keeper"
+    },
+    {
+      "tags": "forge:diamond_tools, forge:diamond_armor, forge:diamond_blocks",
+      "label": "Eldorath the Ancient Builder",
+      "color": "b",
+      "advancement": "armageddon_mod:the_diamond_keeper"
+    },
+    {
+      "tags": "forge:elvenite_tools, forge:elvenite_armor, forge:elvenite_blocks",
+      "label": "The Elvenite Paladin",
+      "color": "e",
+      "advancement": "armageddon_mod:the_elvenite_keeper"
+    },
+    {
+      "tags": "forge:emerald_tools, forge:emerald_armor, forge:emerald_blocks",
+      "label": "Arion, Tyrant of the Emerald Wrath",
+      "color": "a",
+      "advancement": "armageddon_mod:the_emerald_keeper"
+    },
+    {
+      "tags": "forge:helionite_tools, forge:helionite_armor, forge:helionite_blocks",
+      "label": "Zoranth, Newborn of the Zenith",
+      "color": "6",
+      "advancement": "armageddon_mod:the_sun_keeper"
+    },
+    {
+      "tags": "forge:voiderite_tools, forge:voiderite_armor, forge:voiderite_blocks",
+      "label": "Vaedric, the Fallen Wanderer",
+      "color": "5",
+      "advancement": "armageddon_mod:the_voiderite_keeper"
+    },
+    {
+      "tags": "forge:iron_tools, forge:iron_armor, forge:iron_blocks",
+      "label": "The Iron Colossus",
+      "color": "f",
+      "advancement": "armageddon_mod:the_iron_keeper"
+    },
+    {
+      "tags": "forge:golden_tools, forge:golden_armor, forge:golden_blocks",
+      "label": "The Goblin Lord",
+      "color": "6",
+      "advancement": "armageddon_mod:the_gold_keeper"
+    },
+    {
+      "tags": "forge:netherite_tools, forge:netherite_armor, forge:netherite_blocks",
+      "label": "Zoranth, the Forgotten One",
+      "color": "8",
+      "advancement": "armageddon_mod:the_netherite_keeper"
+    }
+  ]
+}
