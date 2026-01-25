@@ -6,6 +6,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -39,27 +40,27 @@ public class TooltipHandler {
 
             if (hasAnyTag) {
                 // Check if player has the advancement
-                boolean hasAdvancement = playerHasAdvancement(player, entry.getAdvancement());
+                MutableComponent locked = getLockedComponent(player, entry.getAdvancement());
 
-                if (!hasAdvancement) {
-                    // Item is locked
-                    event.getToolTip().add(Component.literal(""));
+                // Item is locked
+                event.getToolTip().add(Component.literal(""));
 
-                    // Get color formatting from config
-                    ChatFormatting color = ChatFormatting.getByCode(entry.getColor().charAt(0));
-                    if (color == null) {
-                        color = ChatFormatting.RED; // Default to red if invalid color code
-                    }
-
-                    event.getToolTip().add(Component.translatable("armageddon_tooltip_tier.locked_by").withStyle(ChatFormatting.RED)
-                            .append(Component.literal(" "))
-                            .append(Component.literal(entry.getLabel()).withStyle(color)));
-                }
+                event.getToolTip().add(locked
+                        .append(Component.literal(" "))
+                        .append(Component.translatable(entry.getLabel())));
 
                 // Only show tooltip for the first matching tag
                 break;
             }
         }
+    }
+
+    private MutableComponent getLockedComponent(LocalPlayer player, ResourceLocation advancement) {
+        boolean hasAdvancement = playerHasAdvancement(player, advancement);
+        String unlocked = hasAdvancement ? "armageddon_tooltip_tier.unlocked_by" : "armageddon_tooltip_tier.locked_by";
+        ChatFormatting color = hasAdvancement ? ChatFormatting.DARK_GREEN : ChatFormatting.RED;
+
+        return Component.translatable(unlocked).withStyle(color);
     }
 
     private boolean playerHasAdvancement(LocalPlayer player, ResourceLocation advancementId) {

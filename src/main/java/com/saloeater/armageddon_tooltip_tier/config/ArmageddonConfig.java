@@ -23,6 +23,7 @@ public class ArmageddonConfig {
 
     public static final ClientConfig CLIENT;
     public static final ForgeConfigSpec CLIENT_SPEC;
+    public static final Integer VERSION = 1;
 
     static {
         Pair<ClientConfig, ForgeConfigSpec> clientPair = new ForgeConfigSpec.Builder().configure(ClientConfig::new);
@@ -36,8 +37,14 @@ public class ArmageddonConfig {
 
     public static class ClientConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends List<String>>> tags;
+        public final ForgeConfigSpec.IntValue version;
 
         public ClientConfig(ForgeConfigSpec.Builder builder) {
+            builder.push("version");
+            version = builder.comment("Configuration Version - Do not change this value")
+                    .defineInRange("config_version", 0, 0, Integer.MAX_VALUE);
+            builder.pop();
+
             builder.comment("Armageddon Tooltip Tier Configuration")
                     .push("general");
 
@@ -53,10 +60,9 @@ public class ArmageddonConfig {
                             JsonObject tagObj = element.getAsJsonObject();
                             String tag = tagObj.get("tags").getAsString();
                             String label = tagObj.get("label").getAsString();
-                            String color = tagObj.get("color").getAsString();
                             String advancement = tagObj.get("advancement").getAsString();
 
-                            defaultTags.add(Arrays.asList(tag, label, color, advancement));
+                            defaultTags.add(Arrays.asList(tag, label, advancement));
                         });
                     }
                     LOGGER.info("Loaded {} default tag entries from armageddontags.json", defaultTags.size());
@@ -66,13 +72,13 @@ public class ArmageddonConfig {
             }
 
             tags = builder
-                    .comment("List of tag entries. Format: [tags, label, color, advancement]",
+                    .comment("List of tag entries. Format: [tags, label, advancement]",
                             "Tags can be comma-separated for multiple tags",
-                            "Example: [\"forge:diamond_tools,minecraft:swords\", \"Eldorath the Ancient Builder!\", \"c\", \"armageddon_mod:the_diamond_keeper\"]")
+                            "Example: [\"forge:diamond_tools, forge:diamond_armor, forge:diamond_blocks\", \"entity.armageddon_mod.eldoraththe_ancient_builder\", \"armageddon_mod:the_diamond_keeper\"]")
                     .defineList("tags", defaultTags, obj -> {
                         if (!(obj instanceof List)) return false;
                         List<?> list = (List<?>) obj;
-                        return list.size() == 4 && list.stream().allMatch(item -> item instanceof String);
+                        return list.size() == 3 && list.stream().allMatch(item -> item instanceof String);
                     });
 
             builder.pop();
@@ -82,8 +88,8 @@ public class ArmageddonConfig {
             List<TagEntry> entries = new ArrayList<>();
 
             for (List<String> entry : tags.get()) {
-                if (entry.size() >= 4) {
-                    entries.add(new TagEntry(entry.get(0), entry.get(1), entry.get(2), entry.get(3)));
+                if (entry.size() >= 3) {
+                    entries.add(new TagEntry(entry.get(0), entry.get(1), entry.get(2)));
                 }
             }
 
@@ -95,13 +101,11 @@ public class ArmageddonConfig {
         private final String tag;
         private final List<String> tags;
         private final String label;
-        private final String color;
         private final String advancement;
 
-        public TagEntry(String tag, String label, String color, String advancement) {
+        public TagEntry(String tag, String label, String advancement) {
             this.tag = tag;
             this.label = label;
-            this.color = color;
             this.advancement = advancement;
 
             // Parse comma-separated tags
@@ -132,10 +136,6 @@ public class ArmageddonConfig {
 
         public String getLabel() {
             return label;
-        }
-
-        public String getColor() {
-            return color;
         }
 
         public ResourceLocation getAdvancement() {
