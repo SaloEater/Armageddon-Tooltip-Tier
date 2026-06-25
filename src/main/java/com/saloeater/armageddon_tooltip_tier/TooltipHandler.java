@@ -5,9 +5,12 @@ import com.saloeater.armageddon_tooltip_tier.mixin.ClientAdvancementsAccessor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -29,10 +32,16 @@ public class TooltipHandler {
         List<ArmageddonConfig.TagEntry> tagEntries = ArmageddonConfig.CLIENT.getTagEntries();
 
         for (ArmageddonConfig.TagEntry entry : tagEntries) {
-            // Check if the item has any of the tags
+            // Check if the item has any of the tags (item tags, or block tags for block items)
             boolean hasAnyTag = false;
-            for (var tagKey : entry.getTagKeys()) {
-                if (itemStack.is(tagKey)) {
+            for (String tag : entry.getTags()) {
+                ResourceLocation tagId = new ResourceLocation(tag);
+                if (itemStack.is(TagKey.create(Registries.ITEM, tagId))) {
+                    hasAnyTag = true;
+                    break;
+                }
+                if (itemStack.getItem() instanceof BlockItem blockItem
+                        && blockItem.getBlock().defaultBlockState().is(TagKey.create(Registries.BLOCK, tagId))) {
                     hasAnyTag = true;
                     break;
                 }

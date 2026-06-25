@@ -36,7 +36,7 @@
       "advancement": "armageddon_mod:the_iron_keeper"
     },
     {
-      "tags": "forge:golden_tools, forge:golden_armor, forge:golden_blocks",
+      "tags": "forge:golden_tools, forge:golden_armor, forge:gold_blocks",
       "label": "entity.armageddon_mod.the_gobelin_lord",
       "advancement": "armageddon_mod:the_gold_keeper"
     },
@@ -44,6 +44,11 @@
       "tags": "forge:netherite_tools, forge:netherite_armor, forge:netherite_blocks",
       "label": "entity.armageddon_mod.zoranththe_forgotten_one",
       "advancement": "armageddon_mod:the_netherite_keeper"
+    },
+    {
+      "tags": "armageddon_mod:hollow_tools",
+      "label": "entity.armageddon_mod.nyxaris_the_veil_of_oblivion",
+      "advancement": "armageddon_mod:the_shadow_keeper"
     }
   ]
 }
